@@ -96,7 +96,7 @@ const hasWorkingHours = !!(openingTime && closingTime);
         </>
       )}
       <p className="text-center text-xs text-neutral-400">
-        All rights reserved. Made with ❤️ in Azerbaijan | Powered by Lei.az Technologies
+       ©All rights reserved. LY_Technologies
       </p>
     </footer>
   );

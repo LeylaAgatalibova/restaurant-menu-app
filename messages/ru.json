@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "all": "Все",
+    "serviceCharge": "Сервисный сбор: {percent}%",
+    "searchPlaceholder": "Поиск блюд...",
+    "noResults": "По вашему запросу ничего не найдено.",
+    "unavailable": "Сейчас недоступно",
+    "featured": "Рекомендуем"
+  },
+"footer": {
+    "workingHours": "Часы работы",
+    "wifiTitle": "Wi-Fi",
+    "wifiNetwork": "Сеть",
+    "wifiPassword": "Пароль"
+  },
+  "product": {
+    "ingredients": "Состав",
+    "description": "Описание",
+    "addToCart": "Добавить в корзину",
+    "close": "Закрыть"
+  },
+  "cart": {
+    "title": "Ваш заказ",
+    "empty": "Корзина пуста",
+    "emptyHint": "Добавьте блюда из меню, чтобы сформировать заказ.",
+    "total": "Итого",
+    "subtotal": "Сумма заказа",
+    "serviceCharge": "Сервисный сбор",
+    "grandTotal": "Итоговая сумма",
+    "orderNote": "Комментарий к заказу (необязательно)",
+    "orderNotePlaceholder": "напр. без острого, аллергия на орехи...",
+    "itemNotePlaceholder": "Добавить комментарий...",
+    "viewCart": "Корзина",
+    "clear": "Очистить корзину",
+    "waiterHint": "Покажите это официанту, чтобы оформить заказ."
+  }
+}

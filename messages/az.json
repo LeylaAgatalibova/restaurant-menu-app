@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "all": "Hamısı",
+    "serviceCharge": "Servis haqqı: {percent}%",
+    "searchPlaceholder": "Yemək axtarın...",
+    "noResults": "Axtarışa uyğun yemək tapılmadı.",
+    "unavailable": "Hazırda mövcud deyil",
+    "featured": "Seçilmiş"
+  },
+ "footer": {
+    "workingHours": "İş saatları",
+    "wifiTitle": "Wi-Fi",
+    "wifiNetwork": "Şəbəkə",
+    "wifiPassword": "Şifrə"
+  },
+  "product": {
+    "ingredients": "Tərkibi",
+    "description": "Təsvir",
+    "addToCart": "Səbətə əlavə et",
+    "close": "Bağla"
+  },
+  "cart": {
+    "title": "Sifarişiniz",
+    "empty": "Səbətiniz boşdur",
+    "emptyHint": "Sifarişinizi yaratmaq üçün menyudan yemək əlavə edin.",
+    "total": "Cəmi",
+    "subtotal": "Məhsulların cəmi",
+    "serviceCharge": "Servis haqqı",
+    "grandTotal": "Yekun ödəniş",
+    "orderNote": "Sifariş qeydi (istəyə bağlı)",
+    "orderNotePlaceholder": "məs. acı olmasın, qoz-fındığa allergiyam var...",
+    "itemNotePlaceholder": "Qeyd əlavə edin...",
+    "viewCart": "Səbətə bax",
+    "clear": "Səbəti təmizlə",
+    "waiterHint": "Sifarişi vermək üçün bunu ofisiantınıza göstərin."
+  }
+}

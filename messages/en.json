@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "all": "All",
+    "serviceCharge": "Service charge: {percent}%",
+    "searchPlaceholder": "Search dishes...",
+    "noResults": "No dishes match your search.",
+    "unavailable": "Currently unavailable",
+    "featured": "Featured"
+  },
+"footer": {
+    "workingHours": "Working hours",
+    "wifiTitle": "Wi-Fi",
+    "wifiNetwork": "Network",
+    "wifiPassword": "Password"
+  },
+  "product": {
+    "ingredients": "Ingredients",
+    "description": "Description",
+    "addToCart": "Add to cart",
+    "close": "Close"
+  },
+  "cart": {
+    "title": "Your Order",
+    "empty": "Your cart is empty",
+    "emptyHint": "Add dishes from the menu to build your order.",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "serviceCharge": "Service Charge",
+    "grandTotal": "Grand Total",
+    "orderNote": "Order note (optional)",
+    "orderNotePlaceholder": "e.g. no spicy food, allergic to nuts...",
+    "itemNotePlaceholder": "Add a note...",
+    "viewCart": "View Cart",
+    "clear": "Clear cart",
+    "waiterHint": "Show this to your waiter to place the order."
+  }
+}

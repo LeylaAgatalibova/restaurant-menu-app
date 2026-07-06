@@ -1,0 +1,38 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only the restaurant owner (this one fixed UID) can create, edit,
+    // or delete anything. Everyone else - including customers who never
+    // sign in at all - gets read-only access, which is exactly what the
+    // QR menu needs.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid == "K281EUg4wyUlIn97frAPcVHMW7u1";
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /badges/{badgeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Anything not explicitly listed above is denied by default -
+    // there is no catch-all "allow" rule anywhere in this file.
+  }
+}

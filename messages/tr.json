@@ -1,0 +1,37 @@
+{
+  "menu": {
+    "all": "Hepsi",
+    "serviceCharge": "Servis ücreti: {percent}%",
+    "searchPlaceholder": "Yemek ara...",
+    "noResults": "Aramanıza uygun yemek bulunamadı.",
+    "unavailable": "Şu anda mevcut değil",
+    "featured": "Öne Çıkan"
+  },
+  "footer": {
+    "workingHours": "Çalışma saatleri",
+    "wifiTitle": "Wi-Fi",
+    "wifiNetwork": "Ağ",
+    "wifiPassword": "Şifre"
+  },
+  "product": {
+    "ingredients": "İçindekiler",
+    "description": "Açıklama",
+    "addToCart": "Sepete ekle",
+    "close": "Kapat"
+  },
+  "cart": {
+    "title": "Siparişiniz",
+    "empty": "Sepetiniz boş",
+    "emptyHint": "Siparişinizi oluşturmak için menüden yemek ekleyin.",
+    "total": "Toplam",
+    "subtotal": "Ara Toplam",
+    "serviceCharge": "Servis Ücreti",
+    "grandTotal": "Genel Toplam",
+    "orderNote": "Sipariş notu (isteğe bağlı)",
+    "orderNotePlaceholder": "örn. acılı olmasın, fındık alerjim var...",
+    "itemNotePlaceholder": "Not ekleyin...",
+    "viewCart": "Sepete Bak",
+    "clear": "Sepeti temizle",
+    "waiterHint": "Siparişi vermek için bunu garsonunuza gösterin."
+  }
+}

@@ -17,7 +17,9 @@
     "ingredients": "Ingredients",
     "description": "Description",
     "addToCart": "Add to cart",
-    "close": "Close"
+    "added": "Added!",
+    "close": "Close",
+    "selectSize": "Select size"
   },
   "cart": {
     "title": "Your Order",

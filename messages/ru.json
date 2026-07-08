@@ -16,8 +16,10 @@
   "product": {
     "ingredients": "Состав",
     "description": "Описание",
-    "addToCart": "Добавить в корзину",
-    "close": "Закрыть"
+        "addToCart": "Добавить в корзину",
+        "added": "Добавлено!",
+    "close": "Закрыть",
+    "selectSize": "Выберите размер"
   },
   "cart": {
     "title": "Ваш заказ",

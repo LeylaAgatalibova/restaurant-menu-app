@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Product } from "@/types/product";
 import { Locale, getLocalizedText } from "@/types/common";
 import { formatPrice } from "@/lib/utils";
 import { getOptimizedImageUrl } from "@/lib/cloudinary";
+import { useCartStore } from "@/store/cartStore";
 
 type Props = {
   product: Product;
@@ -16,18 +18,36 @@ type Props = {
 
 export default function ProductCard({ product, locale, onSelect, priority = false }: Props) {
   const t = useTranslations("menu");
+  const addItem = useCartStore((state) => state.addItem);
   const imageUrl = getOptimizedImageUrl(product.imageUrl);
   const name = getLocalizedText(product.name, locale);
   const secondaryText =
     getLocalizedText(product.description, locale) ||
     getLocalizedText(product.ingredients, locale);
+  const defaultSize = product.sizes?.[0];
+  const displayPrice = defaultSize ? defaultSize.price : product.price;
+
+  function handleQuickAdd(e: React.MouseEvent) {
+    e.stopPropagation();
+    if (!product.isAvailable) return;
+    addItem({
+      productId: product.id,
+      name,
+      size: defaultSize?.label,
+      price: displayPrice,
+      imageUrl: product.imageUrl,
+    });
+  }
 
   return (
-    <button
-      onClick={() => onSelect(product)}
-      disabled={!product.isAvailable}
-className="w-full text-left bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-neutral-300 hover:shadow-sm transition-all disabled:opacity-60 flex flex-row sm:flex-col"    >
-{/* Image container with blur background effect */}
+    <div
+      onClick={() => product.isAvailable && onSelect(product)}
+      role="button"
+      tabIndex={product.isAvailable ? 0 : -1}
+      data-disabled={!product.isAvailable}
+      className="w-full text-left bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-neutral-300 hover:shadow-sm transition-all data-[disabled=true]:opacity-60 data-[disabled=true]:pointer-events-none flex flex-row sm:flex-col cursor-pointer"
+    >
+      {/* Image container with blur background effect */}
       <div className="relative order-2 sm:order-1 w-24 h-24 sm:w-full sm:h-auto sm:aspect-[4/3] bg-neutral-900 shrink-0 overflow-hidden rounded-r-2xl sm:rounded-t-2xl sm:rounded-r-none">
         {imageUrl ? (
           <>
@@ -40,7 +60,7 @@ className="w-full text-left bg-white rounded-2xl border border-neutral-200 overf
               priority={false}
             />
             {/* Clean Foreground Image */}
-                     <Image
+            <Image
               src={imageUrl}
               alt={name}
               fill
@@ -49,7 +69,6 @@ className="w-full text-left bg-white rounded-2xl border border-neutral-200 overf
               priority={priority}
               loading={priority ? "eager" : "lazy"}
             />
-
           </>
         ) : (
           <div className="w-full h-full flex items-center justify-center text-neutral-300 text-xs">
@@ -69,6 +88,17 @@ className="w-full text-left bg-white rounded-2xl border border-neutral-200 overf
               {t("unavailable")}
             </span>
           </div>
+        )}
+
+        {product.isAvailable && (
+          <button
+            type="button"
+            onClick={handleQuickAdd}
+            aria-label="Quick add to cart"
+            className="absolute bottom-1.5 right-1.5 z-20 bg-neutral-900 text-white rounded-full p-1.5 shadow-md hover:bg-neutral-700 active:scale-90 transition-all"
+          >
+            <Plus size={14} strokeWidth={2.5} />
+          </button>
         )}
       </div>
 
@@ -97,8 +127,8 @@ className="w-full text-left bg-white rounded-2xl border border-neutral-200 overf
             </p>
           )}
         </div>
-        <p className="mt-1 text-sm font-semibold">{formatPrice(product.price)}</p>
+        <p className="mt-1 text-sm font-semibold">{formatPrice(displayPrice)}</p>
       </div>
-    </button>
+    </div>
   );
 }

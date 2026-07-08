@@ -16,8 +16,10 @@
   "product": {
     "ingredients": "Tərkibi",
     "description": "Təsvir",
-    "addToCart": "Səbətə əlavə et",
-    "close": "Bağla"
+ "addToCart": "Səbətə əlavə et",
+ "added": "Əlavə olundu!",
+    "close": "Bağla",
+    "selectSize": "Ölçü seçin"
   },
   "cart": {
     "title": "Sifarişiniz",

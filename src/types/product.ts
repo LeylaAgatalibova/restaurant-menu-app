@@ -6,13 +6,20 @@ export type Badge = {
   color: string; // Tailwind-friendly hex or class token, e.g. "#E11D48"
 };
 
+export type ProductSize = {
+  id: string;
+  label: string; // e.g. "S", "M", "L"
+  price: number;
+};
+
 export type Product = {
   id: string;
   categoryId: string;
   name: LocalizedText;
   description: LocalizedText;
   ingredients: LocalizedText; // stored as one translated block of text
-  price: number; // stored in the smallest sensible unit for the currency, e.g. AZN as a decimal
+  price: number; // base/single price, used when sizes is empty
+  sizes: ProductSize[]; // if non-empty, overrides price in customer UI
   imageUrl: string | null; // Firebase Storage download URL
   isAvailable: boolean; // "86'd" toggle - hide from menu without deleting
   isFeatured: boolean;
@@ -29,6 +36,7 @@ export type ProductInput = {
   description: LocalizedText;
   ingredients: LocalizedText;
   price: number;
+  sizes: ProductSize[];
   imageUrl: string | null;
   isAvailable: boolean;
   isFeatured: boolean;

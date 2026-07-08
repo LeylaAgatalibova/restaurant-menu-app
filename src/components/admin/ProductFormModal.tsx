@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
-import { Product, Badge } from "@/types/product";
+import { X, Plus, Trash2 } from "lucide-react";
+import { Product, Badge, ProductSize } from "@/types/product";
 import { Category } from "@/types/category";
 import { LocalizedText } from "@/types/common";
 import LocalizedInput from "@/components/ui/LocalizedInput";
@@ -71,6 +71,7 @@ export default function ProductFormModal({
   const [ingText, setIngText] = useState<string>(product?.ingredients?.az ?? "");
   
   const [price, setPrice] = useState(product?.price ?? 0);
+  const [sizes, setSizes] = useState<ProductSize[]>(product?.sizes ?? []);
   const [imageUrl, setImageUrl] = useState<string | null>(product?.imageUrl ?? null);
   const [isAvailable, setIsAvailable] = useState(product?.isAvailable ?? true);
   const [isFeatured, setIsFeatured] = useState(product?.isFeatured ?? false);
@@ -85,12 +86,23 @@ export default function ProductFormModal({
     return subscribeToBadges(setAllBadges);
   }, []);
 
-  function toggleBadge(id: string) {
+function toggleBadge(id: string) {
     setSelectedBadgeIds((current) =>
       current.includes(id) ? current.filter((b) => b !== id) : [...current, id]
     );
   }
 
+  function addSize() {
+    setSizes((current) => [...current, { id: crypto.randomUUID(), label: "", price: 0 }]);
+  }
+
+  function updateSize(id: string, patch: Partial<Omit<ProductSize, "id">>) {
+    setSizes((current) => current.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+  }
+
+  function removeSize(id: string) {
+    setSizes((current) => current.filter((s) => s.id !== id));
+  }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.az.trim()) {
@@ -159,12 +171,17 @@ export default function ProductFormModal({
       }
     }
 
+    const finalSizes = sizes
+      .filter((s) => s.label.trim())
+      .map((s) => ({ ...s, price: Number(s.price) || 0 }));
+
     const input = {
       categoryId,
       name: finalName,
       description: product?.description ?? EMPTY_TEXT,
       ingredients: finalIngredients,
       price,
+      sizes: finalSizes,
       imageUrl,
       isAvailable,
       isFeatured,
@@ -293,9 +310,9 @@ export default function ProductFormModal({
             </div>
           </div>
 
-          <div>
+       <div>
             <label className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
-              Price (₼)
+              Price (₼) {sizes.length > 0 && "— fallback only, unused while sizes exist"}
             </label>
             <input
               type="number"
@@ -306,6 +323,52 @@ export default function ProductFormModal({
               onChange={(e) => setPrice(Number(e.target.value))}
               className="mt-1.5 w-full text-sm border border-neutral-200 rounded-lg px-3 py-2 focus:outline-none focus:border-neutral-400"
             />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                Sizes (optional)
+              </label>
+              <button
+                type="button"
+                onClick={addSize}
+                className="flex items-center gap-1 text-xs font-medium text-neutral-600 hover:text-neutral-900"
+              >
+                <Plus size={14} /> Add size
+              </button>
+            </div>
+            <div className="mt-1.5 space-y-2">
+              {sizes.map((size) => (
+                <div key={size.id} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="e.g. S, M, L"
+                    value={size.label}
+                    onChange={(e) => updateSize(size.id, { label: e.target.value })}
+                    className="w-24 text-sm border border-neutral-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-neutral-400"
+                  />
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="Price"
+                    value={size.price}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => updateSize(size.id, { price: Number(e.target.value) })}
+                    className="flex-1 text-sm border border-neutral-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-neutral-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeSize(size.id)}
+                    className="text-neutral-300 hover:text-red-500"
+                    aria-label="remove size"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
 
           {allBadges.length > 0 && (

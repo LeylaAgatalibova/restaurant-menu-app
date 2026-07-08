@@ -62,7 +62,7 @@ export default function CartDrawer({ onClose }: Props) {
               {items.map((item) => {
                 const imageUrl = getOptimizedImageUrl(item.imageUrl);
                 return (
-                  <div key={item.productId} className="flex gap-3">
+                  <div key={item.cartItemId} className="flex gap-3">
                     <div className="relative w-16 h-16 rounded-lg bg-neutral-100 shrink-0 overflow-hidden">
                       {imageUrl && (
                         <Image
@@ -77,11 +77,14 @@ export default function CartDrawer({ onClose }: Props) {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
-                        <h3 className="text-sm font-medium leading-snug">
+                       <h3 className="text-sm font-medium leading-snug">
                           {item.name}
+                          {item.size && (
+                            <span className="text-neutral-400 font-normal"> ({item.size})</span>
+                          )}
                         </h3>
                         <button
-                          onClick={() => removeItem(item.productId)}
+                          onClick={() => removeItem(item.cartItemId)}
                           className="text-neutral-300 hover:text-neutral-500 shrink-0"
                           aria-label="remove"
                         >
@@ -96,15 +99,15 @@ export default function CartDrawer({ onClose }: Props) {
                       <input
                         type="text"
                         value={item.note ?? ""}
-                        onChange={(e) => setNote(item.productId, e.target.value)}
+                        onChange={(e) => setNote(item.cartItemId, e.target.value)}
                         placeholder={t("itemNotePlaceholder")}
                         className="mt-1.5 w-full text-xs border border-neutral-200 rounded-lg px-2 py-1 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-300"
                       />
 
                       <div className="mt-2 flex items-center gap-2">
                         <div className="flex items-center border border-neutral-200 rounded-full">
-                          <button
-                            onClick={() => decreaseQuantity(item.productId)}
+                    <button
+                            onClick={() => decreaseQuantity(item.cartItemId)}
                             className="p-1.5 text-neutral-500 hover:text-neutral-900"
                             aria-label="decrease"
                           >
@@ -114,7 +117,7 @@ export default function CartDrawer({ onClose }: Props) {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => increaseQuantity(item.productId)}
+                            onClick={() => increaseQuantity(item.cartItemId)}
                             className="p-1.5 text-neutral-500 hover:text-neutral-900"
                             aria-label="increase"
                           >

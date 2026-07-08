@@ -17,7 +17,9 @@
     "ingredients": "İçindekiler",
     "description": "Açıklama",
     "addToCart": "Sepete ekle",
-    "close": "Kapat"
+    "added": "Eklendi!",
+    "close": "Kapat",
+    "selectSize": "Boyut seçin"
   },
   "cart": {
     "title": "Siparişiniz",

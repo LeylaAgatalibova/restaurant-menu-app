@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { X, Minus, Plus } from "lucide-react";
+import { X, Minus, Plus, Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Product } from "@/types/product";
 import { Locale, getLocalizedText } from "@/types/common";
@@ -20,22 +20,28 @@ export default function ProductModal({ product, locale, onClose }: Props) {
   const t = useTranslations("product");
   const tMenu = useTranslations("menu");
   const addItem = useCartStore((state) => state.addItem);
-  const [quantity, setQuantity] = useState(1);
+   const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
+  const [selectedSizeId, setSelectedSizeId] = useState(product.sizes?.[0]?.id ?? null);
   const imageUrl = getOptimizedImageUrl(product.imageUrl);
   const name = getLocalizedText(product.name, locale);
   const description = getLocalizedText(product.description, locale);
   const ingredients = getLocalizedText(product.ingredients, locale);
+  const selectedSize = product.sizes?.find((s) => s.id === selectedSizeId) ?? null;
+  const unitPrice = selectedSize ? selectedSize.price : product.price;
 
-  function handleAdd() {
+ function handleAdd() {
     for (let i = 0; i < quantity; i++) {
       addItem({
         productId: product.id,
         name,
-        price: product.price,
+        size: selectedSize?.label,
+        price: unitPrice,
         imageUrl: product.imageUrl,
       });
     }
-    onClose();
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1500);
   }
 
   return (
@@ -100,10 +106,37 @@ export default function ProductModal({ product, locale, onClose }: Props) {
             ))}
           </div>
 
-          <h2 className="text-lg font-semibold">{name}</h2>
+        <h2 className="text-lg font-semibold">{name}</h2>
           <p className="mt-1 text-base font-semibold text-neutral-700">
-            {formatPrice(product.price)}
+            {formatPrice(unitPrice)}
           </p>
+
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-neutral-400 mb-2">
+                {t("selectSize")}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes.map((size) => (
+                  <button
+                    key={size.id}
+                    type="button"
+                    onClick={() => setSelectedSizeId(size.id)}
+                    className={`flex items-center justify-between gap-3 border rounded-xl px-3 py-2 text-sm transition-colors ${
+                      selectedSizeId === size.id
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 text-neutral-700 hover:border-neutral-300"
+                    }`}
+                  >
+                    <span className="font-medium">{size.label}</span>
+                    <span className={selectedSizeId === size.id ? "text-white/80" : "text-neutral-400"}>
+                      {formatPrice(size.price)}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {description && (
             <div className="mt-4">
@@ -149,11 +182,22 @@ export default function ProductModal({ product, locale, onClose }: Props) {
                 </button>
               </div>
 
-              <button
+             <button
                 onClick={handleAdd}
-                className="flex-1 bg-neutral-900 text-white rounded-full py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
+                disabled={isAdded}
+                className={`flex-1 rounded-full py-2.5 text-sm font-medium transition-colors flex items-center justify-center gap-1.5 ${
+                  isAdded
+                    ? "bg-green-600 text-white"
+                    : "bg-neutral-900 text-white hover:bg-neutral-800"
+                }`}
               >
-                {t("addToCart")} · {formatPrice(product.price * quantity)}
+                {isAdded ? (
+                  <>
+                    <Check size={16} /> {t("added")}
+                  </>
+                ) : (
+                  `${t("addToCart")} · ${formatPrice(unitPrice * quantity)}`
+                )}
               </button>
             </div>
           )}
